@@ -1,5 +1,5 @@
 numbers = []
-with open('../input01.txt') as f:
+with open('../input/input01.txt') as f:
   for line in f:
     numbers.append(int(line.strip('\n')))
 for i, first in enumerate(numbers):

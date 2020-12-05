@@ -15,6 +15,7 @@ inline vector<int> read_numbers(string file_name)
 
     return numbers;
 }
+
 void Day01()
 {
     auto numbers = read_numbers("../input/input01.txt");
@@ -30,9 +31,11 @@ void Day01()
             {
                 if (numbers[i] + numbers[j] + numbers[k] == 2020)
                 {
-                    cout << "Part 2: " << numbers[i] * numbers[j] * numbers[k];
+                    cout << "Part 2: " << numbers[i] * numbers[j] * numbers[k] << endl;
                 }
             }
         }
     }
+
+    cout << endl;
 }

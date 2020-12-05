@@ -3,4 +3,5 @@
 int main()
 {
     Day01();
+    Day02();
 }

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace AdventOfCode2020
 {
@@ -8,24 +8,39 @@ namespace AdventOfCode2020
     {
         public static void Execute()
         {
-            var numbers = File.ReadAllLines("../../../../input/input01.txt").Select(x => int.Parse(x)).ToArray();
-            for (var i = 0; i < numbers.Length; i++)
+            var lines = File.ReadAllLines("../../../../input/input02.txt");
+            var regex = new Regex("(?<min>.+)-(?<max>.+) (?<char>.+): (?<password>.+)");
+            var validPasswords1 = 0;
+            var validPasswords2 = 0;
+            foreach (var line in lines)
             {
-                for (var j = i + 1; j < numbers.Length; j++)
+                var m = regex.Match(line);
+                // can't deconstruct 😥
+                var min = int.Parse(m.Groups["min"].Value);
+                var max = int.Parse(m.Groups["max"].Value);
+                var character = m.Groups["char"].Value[0];
+                var password = m.Groups["password"].Value;
+                var count = 0;
+                foreach (var item in password)
                 {
-                    if (numbers[i] + numbers[j] == 2020)
+                    if (item == character)
                     {
-                        Console.WriteLine("Part 1: {0}", numbers[i] * numbers[j]);
-                    }
-                    for (var k = j + 1; k < numbers.Length; k++)
-                    {
-                        if (numbers[i] + numbers[j] + numbers[k] == 2020)
-                        {
-                            Console.WriteLine("Part 2: {0}", numbers[i] * numbers[j] * numbers[k]);
-                        }
+                        ++count;
                     }
                 }
+                if (min <= count && count <= max)
+                {
+                    ++validPasswords1;
+                }
+                if ((password[min - 1] == character || password[max - 1] == character) &&
+                    password[min - 1] != password[max - 1])
+                {
+                    ++validPasswords2;
+                }
             }
+            Console.WriteLine("Part 1: {0}", validPasswords1);
+            Console.WriteLine("Part 2: {0}", validPasswords2);
+            Console.WriteLine();
         }
     }
 }

@@ -1,3 +1,5 @@
+#include "days.h"
+
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -13,8 +15,7 @@ inline vector<int> read_numbers(string file_name)
 
     return numbers;
 }
-
-int main()
+void Day01()
 {
     auto numbers = read_numbers("../input/input01.txt");
     for (size_t i = 0; i < numbers.size(); ++i)

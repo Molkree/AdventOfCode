@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Text.RegularExpressions;
 
 namespace AdventOfCode2020
 {
@@ -28,7 +27,7 @@ namespace AdventOfCode2020
             }
 
             Console.WriteLine($"Part 1: {Slide(1, 3)}");
-            Console.WriteLine($"Part 2: {Slide(1, 1) * Slide(1, 3) * Slide(1, 5) * Slide(1, 7) * Slide (2, 1)}");
+            Console.WriteLine($"Part 2: {Slide(1, 1) * Slide(1, 3) * Slide(1, 5) * Slide(1, 7) * Slide(2, 1)}");
             Console.WriteLine();
         }
     }

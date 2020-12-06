@@ -1,0 +1,2 @@
+# To keep line endins in input files as they were originally
+*.txt text eol=lf

@@ -28,7 +28,7 @@ void Day03()
     const auto slide = [&](int dy, int dx)
     {
         auto x = 0ull, y = 0ull, treesEncountered = 0ull;
-        while (y < height)
+        while (y < height - dy)
         {
             y += dy;
             x = (x + dx) % width;

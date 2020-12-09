@@ -7,7 +7,7 @@
 
 using namespace std;
 
-inline vector<string> read_lines(string file_name)
+inline vector<string> read_lines(const string & file_name)
 {
     ifstream infile(file_name);
     string line;

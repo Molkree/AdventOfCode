@@ -7,7 +7,7 @@
 
 using namespace std;
 
-inline vector<int> read_numbers(string file_name)
+inline vector<int> read_numbers(const string & file_name)
 {
     ifstream infile(file_name);
     const istream_iterator<int> start(infile), end;

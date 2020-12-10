@@ -172,4 +172,6 @@ void Day04()
     is_valid_passport(passwords[3]);
     const auto valid_passports_count_2 = count_if(passwords.begin(), passwords.end(), is_valid_passport);
     cout << "Part 2: " << valid_passports_count_2 << endl;
+
+    cout << endl;
 }

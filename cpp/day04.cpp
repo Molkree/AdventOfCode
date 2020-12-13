@@ -50,7 +50,7 @@ bool int_try_parse(const string& maybe_int, int & out_int)
 
 bool check_year(const unordered_map<string, string>& key_value_pairs, const string & field, int lower_bound, int upper_bound)
 {
-    if (auto iter = key_value_pairs.find(field); iter != key_value_pairs.end())
+    if (const auto iter = key_value_pairs.find(field); iter != key_value_pairs.end())
     {
         int year;
         if (int_try_parse(iter->second, year) && lower_bound <= year && year <= upper_bound)
@@ -63,7 +63,7 @@ bool check_year(const unordered_map<string, string>& key_value_pairs, const stri
 
 bool check_height(const unordered_map<string, string>& dict)
 {
-    if (auto iter = dict.find("hgt"); iter != dict.end())
+    if (const auto iter = dict.find("hgt"); iter != dict.end())
     {
         auto& height_string = iter->second;
         const auto check_height_string = [](const string& height_string, const string& suffix, int lower_bound, int upper_bound)
@@ -85,7 +85,7 @@ bool check_height(const unordered_map<string, string>& dict)
 
 bool check_hair_color(const unordered_map<string, string>& dict)
 {
-    if (auto iter = dict.find("hcl"); iter != dict.end())
+    if (const auto iter = dict.find("hcl"); iter != dict.end())
     {
         auto& hair_string = iter->second;
         if (hair_string[0] == '#' && hair_string.size() == 7 &&
@@ -99,7 +99,7 @@ bool check_hair_color(const unordered_map<string, string>& dict)
 
 bool check_eye_color(const unordered_map<string, string>& dict)
 {
-    if (auto iter = dict.find("ecl"); iter != dict.end())
+    if (const auto iter = dict.find("ecl"); iter != dict.end())
     {
         unordered_set<string> eye_colors({ "amb", "blu", "brn", "gry", "grn", "hzl", "oth" });
         if (eye_colors.contains(iter->second))
@@ -112,7 +112,7 @@ bool check_eye_color(const unordered_map<string, string>& dict)
 
 bool check_passport_id(const unordered_map<string, string>& dict)
 {
-    if (auto iter = dict.find("pid"); iter != dict.end())
+    if (const auto iter = dict.find("pid"); iter != dict.end())
     {
         auto& pid = iter->second;
         if (pid.size() == 9 && regex_match(pid, regex("[0-9]+")))

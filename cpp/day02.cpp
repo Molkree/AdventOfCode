@@ -7,16 +7,16 @@
 
 using namespace std;
 
-inline vector<string> read_lines(const string & file_name)
+vector<string> read_lines(const string& file_name)
 {
     ifstream infile(file_name);
     string line;
-    vector<string> myLines;
+    vector<string> my_lines;
     while (getline(infile, line))
     {
-        myLines.push_back(line);
+        my_lines.push_back(line);
     }
-    return myLines;
+    return my_lines;
 }
 
 void Day02()

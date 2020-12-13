@@ -4,7 +4,7 @@
 #include <vector>
 #include <string>
 
-inline std::vector<std::string> read_lines(const std::string& file_name);
+std::vector<std::string> read_lines(const std::string& file_name);
 
 void Day01();
 void Day02();

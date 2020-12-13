@@ -1,23 +1,10 @@
 #include "days.h"
 
 #include <iostream>
-#include <fstream>
 #include <vector>
 #include <string>
 
 using namespace std;
-
-inline vector<string> read_lines(const string & file_name)
-{
-    ifstream infile(file_name);
-    string line;
-    vector<string> myLines;
-    while (getline(infile, line))
-    {
-        myLines.push_back(line);
-    }
-    return myLines;
-}
 
 void Day03()
 {

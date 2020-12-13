@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <algorithm>
 
 using namespace std;
 
@@ -34,18 +35,21 @@ int get_seat_id(const string& seat_string) noexcept
 void Day05()
 {
     auto seats = read_lines("../input/input05.txt");
-    int max_seat_id = 0;
-    for (const auto& seat : seats)
+    vector<int> seat_ids(seats.size());
+    transform(seats.begin(), seats.end(), seat_ids.begin(), get_seat_id);
+    sort(seat_ids.begin(), seat_ids.end());
+    int my_seat = 0;
+    for (size_t i = 0; i < seat_ids.size(); ++i)
     {
-        const auto seat_id = get_seat_id(seat);
-        if (max_seat_id < seat_id)
+        if (seat_ids[i + 1] != seat_ids[i] + 1)
         {
-            max_seat_id = seat_id;
+            my_seat = seat_ids[i] + 1;
+            break;
         }
     }
 
-    cout << "Part 1: " << max_seat_id << endl;
-    cout << "Part 2: " << endl;
+    cout << "Part 1: " << seat_ids[seat_ids.size() - 1] << endl;
+    cout << "Part 2: " << my_seat << endl;
 
     cout << endl;
 }

@@ -8,7 +8,7 @@ namespace AdventOfCode2020
     {
         public static void Execute()
         {
-            var numbers = File.ReadAllLines("../../../../input/input01.txt").Select(x => int.Parse(x)).ToArray();
+            var numbers = File.ReadAllLines("../input/input01.txt").Select(x => int.Parse(x)).ToArray();
             for (var i = 0; i < numbers.Length; i++)
             {
                 for (var j = i + 1; j < numbers.Length; j++)

@@ -8,7 +8,7 @@ namespace AdventOfCode2020
     {
         public static void Execute()
         {
-            var lines = File.ReadAllLines("../../../../input/input02.txt");
+            var lines = File.ReadAllLines("../input/input02.txt");
             var regex = new Regex("(?<min>.+)-(?<max>.+) (?<char>.+): (?<password>.+)");
             var validPasswords1 = 0;
             var validPasswords2 = 0;

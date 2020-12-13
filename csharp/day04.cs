@@ -50,7 +50,7 @@ namespace AdventOfCode2020
 
         public static void Execute()
         {
-            var file = File.ReadAllText("../../../../input/input04.txt");
+            var file = File.ReadAllText("../input/input04.txt");
             var passports = file.Split("\n\n");
             var validPassportsCount = passports.Count(x => x.Contains("byr") &&
                 x.Contains("iyr") && x.Contains("eyr") && x.Contains("hgt") &&

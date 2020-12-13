@@ -7,7 +7,7 @@ namespace AdventOfCode2020
     {
         public static void Execute()
         {
-            var lines = File.ReadAllLines("../../../../input/input03.txt");
+            var lines = File.ReadAllLines("../input/input03.txt");
             var width = lines[0].Length;
             var height = lines.Length;
             ulong Slide(int dy, int dx)

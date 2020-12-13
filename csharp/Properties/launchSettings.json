@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "csharp": {
+      "commandName": "Project",
+      "workingDirectory": "$(ProjectDir)"
+    }
+  }
+}

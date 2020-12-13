@@ -1,4 +1,5 @@
 import re
+print('Day 02')
 with open('../input/input02.txt') as f:
   validPasswords1 = 0
   validPasswords2 = 0

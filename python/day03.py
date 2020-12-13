@@ -1,3 +1,4 @@
+print('Day 03')
 with open('../input/input03.txt') as f:
   lines = f.readlines()
   width = len(lines[0]) - 1

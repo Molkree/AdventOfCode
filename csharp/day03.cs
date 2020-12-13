@@ -7,6 +7,7 @@ namespace AdventOfCode2020
     {
         public static void Execute()
         {
+            Console.WriteLine("Day 03");
             var lines = File.ReadAllLines("../input/input03.txt");
             var width = lines[0].Length;
             var height = lines.Length;

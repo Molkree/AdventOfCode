@@ -154,6 +154,7 @@ bool is_valid_passport(string fields)
 
 void Day04()
 {
+    cout << "Day 04" << endl;
     auto passwords = get_raw_passports("../input/input04.txt");
 
     const auto valid_passports_count_1 = count_if(passwords.begin(), passwords.end(), [](const auto& password) noexcept

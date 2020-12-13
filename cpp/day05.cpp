@@ -34,6 +34,7 @@ int get_seat_id(const string& seat_string) noexcept
 
 void Day05()
 {
+    cout << "Day 05" << endl;
     auto seats = read_lines("../input/input05.txt");
     vector<int> seat_ids(seats.size());
     transform(seats.begin(), seats.end(), seat_ids.begin(), get_seat_id);

@@ -18,6 +18,7 @@ inline vector<int> read_numbers(const string & file_name)
 
 void Day01()
 {
+    cout << "Day 01" << endl;
     auto numbers = read_numbers("../input/input01.txt");
     for (size_t i = 0; i < numbers.size(); ++i)
     {

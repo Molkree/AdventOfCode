@@ -21,6 +21,7 @@ vector<string> read_lines(const string& file_name)
 
 void Day02()
 {
+    cout << "Day 02" << endl;
     auto lines = read_lines("../input/input02.txt");
 
     regex rgx("(.+)-(.+) (.+): (.+)");

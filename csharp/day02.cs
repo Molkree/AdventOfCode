@@ -8,6 +8,7 @@ namespace AdventOfCode2020
     {
         public static void Execute()
         {
+            Console.WriteLine("Day 02");
             var lines = File.ReadAllLines("../input/input02.txt");
             var regex = new Regex("(?<min>.+)-(?<max>.+) (?<char>.+): (?<password>.+)");
             var validPasswords1 = 0;

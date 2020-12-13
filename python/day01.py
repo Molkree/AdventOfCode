@@ -1,3 +1,4 @@
+print('Day 01')
 numbers = []
 with open('../input/input01.txt') as f:
   for line in f:

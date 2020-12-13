@@ -1,3 +1,4 @@
+print('Day 04')
 def isValidPassport(fields):
   keyValuePairs = fields.replace(' ', '\n').split()
   keyValuePairs = [keyValuePair.split(':') for keyValuePair in keyValuePairs]

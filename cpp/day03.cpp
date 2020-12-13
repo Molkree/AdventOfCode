@@ -8,6 +8,7 @@ using namespace std;
 
 void Day03()
 {
+    cout << "Day 03" << endl;
     auto lines = read_lines("../input/input03.txt");
 
     const auto width = lines[0].length();

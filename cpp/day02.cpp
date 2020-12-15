@@ -4,19 +4,32 @@
 #include <regex>
 #include <fstream>
 #include <vector>
+#include <istream>
+#include <sstream>
 
 using namespace std;
+
+vector<string> get_lines(basic_istream<char, char_traits<char>>& input)
+{
+    string line;
+    vector<string> result;
+    while (getline(input, line, '\n'))
+    {
+        result.emplace_back(line);
+    }
+    return result;
+}
+
+vector<string> split_lines(const string& str)
+{
+    stringstream ss(str);
+    return get_lines(ss);
+}
 
 vector<string> read_lines(const string& file_name)
 {
     ifstream infile(file_name);
-    string line;
-    vector<string> my_lines;
-    while (getline(infile, line))
-    {
-        my_lines.push_back(line);
-    }
-    return my_lines;
+    return get_lines(infile);
 }
 
 void Day02()

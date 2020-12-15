@@ -14,7 +14,7 @@
 
 using namespace std;
 
-inline vector<string> get_raw_passports(const string& file_name)
+inline vector<string> read_line_groups(const string& file_name)
 {
     ifstream infile(file_name);
     string str((istreambuf_iterator<char>(infile)),
@@ -30,7 +30,7 @@ inline vector<string> get_raw_passports(const string& file_name)
         result.push_back(token);
         str.erase(0, pos + delimiter.length());
     }
-    result.push_back(str.substr(0, str.length() - 1)); // last passport without \n at the end
+    result.push_back(str.substr(0, str.length() - 1)); // last group without \n at the end
 
     return result;
 }
@@ -155,7 +155,7 @@ bool is_valid_passport(string fields)
 void Day04()
 {
     cout << "Day 04" << endl;
-    auto passwords = get_raw_passports("../input/input04.txt");
+    auto passwords = read_line_groups("../input/input04.txt");
 
     const auto valid_passports_count_1 = count_if(passwords.begin(), passwords.end(), [](const auto& password) noexcept
     {

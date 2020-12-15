@@ -5,11 +5,14 @@
 #include <string>
 
 std::vector<std::string> read_lines(const std::string& file_name);
+std::vector<std::string> split_lines(const std::string& str);
+std::vector<std::string> read_line_groups(const std::string& file_name);
 
 void Day01();
 void Day02();
 void Day03();
 void Day04();
 void Day05();
+void Day06();
 
 #endif

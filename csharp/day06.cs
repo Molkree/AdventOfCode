@@ -11,7 +11,7 @@ namespace AdventOfCode2020
             Console.WriteLine("Day 06");
             var file = File.ReadAllText("../input/input06.txt");
             var groups = file.Split("\n\n");
-            groups[^1] = string.Concat(groups.Last().SkipLast(1)); // skip last \n
+            groups[^1] = string.Concat(groups[^1].SkipLast(1)); // skip last \n
             var part1 = groups
                 .Select(group => group.Replace("\n", ""))
                 .Select(group => group.Distinct())

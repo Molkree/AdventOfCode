@@ -11,12 +11,18 @@ namespace AdventOfCode2020
         {
             public string Name { get; init; }
             public int RequiredNumber { get; init; }
-            public Bag(string bagString) => (Name, RequiredNumber) = (bagString[2..], int.Parse(bagString[0].ToString()));
+            public Bag(string bagString) =>
+                (Name, RequiredNumber) =
+                (bagString[2..], int.Parse(bagString[0].ToString()));
             public override int GetHashCode() => Name.GetHashCode();
-            public override bool Equals(object obj) => obj is Bag other && Name == other.Name;
+            public override bool Equals(object obj) =>
+                obj is Bag other && Name == other.Name;
         }
 
-        private static (Dictionary<string, HashSet<string>> bottomUp, Dictionary<string, HashSet<Bag>> topDown) BuildRules(IEnumerable<string> ruleLines)
+        private static
+            (Dictionary<string, HashSet<string>> bottomUp,
+            Dictionary<string, HashSet<Bag>> topDown)
+            BuildRules(IEnumerable<string> ruleLines)
         {
             var bottomUp = new Dictionary<string, HashSet<string>>();
             var topDown = new Dictionary<string, HashSet<Bag>>();
@@ -27,7 +33,8 @@ namespace AdventOfCode2020
                 var values = keyValues[1]
                     .Remove(keyValues[1].Length - 1) // period
                     .Split(", ")
-                    .Select(x => char.IsDigit(x[0]) ? x[0] == '1' ? x : x[..^1] : "");
+                    .Select(x => char.IsDigit(x[0]) ?
+                        x[0] == '1' ? x : x[..^1] : "");
                 if (values.First() == "")
                 {
                     values = new List<string>();
@@ -45,7 +52,8 @@ namespace AdventOfCode2020
                 }
                 if (topDown.ContainsKey(key))
                 {
-                    topDown[key].UnionWith(values.Select(bagString => new Bag(bagString)));
+                    topDown[key].UnionWith(values
+                        .Select(bagString => new Bag(bagString)));
                 }
                 else
                 {
@@ -56,9 +64,12 @@ namespace AdventOfCode2020
             return (bottomUp, topDown);
         }
 
-        private static int DFS(Dictionary<string, HashSet<Bag>> rules, string bag) =>
+        private static int DFS(Dictionary<string,
+            HashSet<Bag>> rules, string bag) =>
             !rules.ContainsKey(bag) ? 0 :
-                rules[bag].Select(innerBag => (1 + DFS(rules, innerBag.Name)) * innerBag.RequiredNumber).Sum();
+                rules[bag].Select(innerBag =>
+                    (1 + DFS(rules, innerBag.Name)) *
+                        innerBag.RequiredNumber).Sum();
 
         public static void Execute()
         {

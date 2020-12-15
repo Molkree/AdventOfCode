@@ -14,7 +14,7 @@ def get_seat_id(seat_string):
   column = partition(seat_string, 7, 'L', 3, 7)
   return row * 8 + column
 
-print('Day 5')
+print('Day 05')
 with open('../input/input05.txt') as f:
   lines = f.readlines()
 seat_ids = [get_seat_id(seat) for seat in lines]

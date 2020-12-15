@@ -9,6 +9,7 @@
             Day03.Execute();
             Day04.Execute();
             Day05.Execute();
+            Day06.Execute();
         }
     }
 }

@@ -14,9 +14,6 @@ namespace AdventOfCode2020
             public Bag(string bagString) =>
                 (Name, RequiredNumber) =
                 (bagString[2..], int.Parse(bagString[0].ToString()));
-            public override int GetHashCode() => Name.GetHashCode();
-            public override bool Equals(object obj) =>
-                obj is Bag other && Name == other.Name;
         }
 
         private static

@@ -28,7 +28,7 @@ namespace AdventOfCode2020
                 var keyValues = rule.Split("s contain ");
                 var key = keyValues[0];
                 var values = keyValues[1]
-                    .Remove(keyValues[1].Length - 1) // period
+                    [..^1] // period
                     .Split(", ")
                     .Select(x => char.IsDigit(x[0]) ?
                         x[0] == '1' ? x : x[..^1] : "");

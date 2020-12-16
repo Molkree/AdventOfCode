@@ -14,25 +14,30 @@
 
 using namespace std;
 
-inline vector<string> read_line_groups(const string& file_name)
+vector<string> split_string(const string& str, const string& delimiter)
+{
+    vector<string> result;
+    string str_copy(str);
+
+    size_t pos = 0;
+    string token;
+    while ((pos = str_copy.find(delimiter)) != string::npos)
+    {
+        token = str_copy.substr(0, pos);
+        result.push_back(token);
+        str_copy.erase(0, pos + delimiter.length());
+    }
+    result.push_back(str_copy.substr(0, str_copy.length()));
+
+    return result;
+}
+
+vector<string> read_line_groups(const string& file_name)
 {
     ifstream infile(file_name);
     string str((istreambuf_iterator<char>(infile)),
         istreambuf_iterator<char>());
-    vector<string> result;
-    string delimiter = "\n\n";
-
-    size_t pos = 0;
-    string token;
-    while ((pos = str.find(delimiter)) != string::npos)
-    {
-        token = str.substr(0, pos);
-        result.push_back(token);
-        str.erase(0, pos + delimiter.length());
-    }
-    result.push_back(str.substr(0, str.length() - 1)); // last group without \n at the end
-
-    return result;
+    return split_string(str, "\n\n");
 }
 
 bool int_try_parse(const string& maybe_int, int & out_int)

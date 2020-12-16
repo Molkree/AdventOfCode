@@ -24,7 +24,7 @@ void Day06()
     vector<size_t> part2_group_counts(groups.size());
     transform(groups.begin(), groups.end(), part2_group_counts.begin(), [](string group)
     {
-        auto split_group = split_lines(group);
+        auto split_group = split_string(group, '\n');
         auto intersection = accumulate(split_group.begin(), split_group.end(), split_group[0], [](string x, string y)
         {
             sort(x.begin(), x.end());

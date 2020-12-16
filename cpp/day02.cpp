@@ -9,21 +9,21 @@
 
 using namespace std;
 
-vector<string> get_lines(basic_istream<char, char_traits<char>>& input)
+vector<string> get_lines(basic_istream<char, char_traits<char>>& input, char delimiter = '\n')
 {
     string line;
     vector<string> result;
-    while (getline(input, line, '\n'))
+    while (getline(input, line, delimiter))
     {
         result.emplace_back(line);
     }
     return result;
 }
 
-vector<string> split_lines(const string& str)
+vector<string> split_string(const string& str, char delimiter)
 {
     stringstream ss(str);
-    return get_lines(ss);
+    return get_lines(ss, delimiter);
 }
 
 vector<string> read_lines(const string& file_name)

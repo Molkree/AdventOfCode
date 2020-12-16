@@ -37,7 +37,7 @@ def DFS(rules, bag):
 print('Day 07')
 with open('../input/input07.txt') as f:
   rule_lines = f.readlines()
-(bottom_up, top_down) = build_rules(rule_lines)
+bottom_up, top_down = build_rules(rule_lines)
 part1 = set(bottom_up['shiny gold bag'])
 queue = deque(part1)
 while len(queue) > 0:

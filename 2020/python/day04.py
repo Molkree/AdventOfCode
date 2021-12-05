@@ -1,45 +1,50 @@
-print('Day 04')
-def isValidPassport(fields):
-  keyValuePairs = fields.replace(' ', '\n').split()
-  keyValuePairs = [keyValuePair.split(':') for keyValuePair in keyValuePairs]
-  keyValuePairs = {key: value for (key, value) in keyValuePairs}
+from utils import get_input_path
 
-  return 'byr' in keyValuePairs and \
-    keyValuePairs['byr'].isdigit() and \
-    1920 <= int(keyValuePairs['byr']) <= 2002 and \
-    \
-    'iyr' in keyValuePairs and \
-    keyValuePairs['iyr'].isdigit() and \
-    2010 <= int(keyValuePairs['iyr']) <= 2020 and \
-    \
-    'eyr' in keyValuePairs and \
-    keyValuePairs['eyr'].isdigit() and \
-    2020 <= int(keyValuePairs['eyr']) <= 2030 and \
-    \
-    'hgt' in keyValuePairs and \
-    (keyValuePairs['hgt'].endswith('cm') and \
-     150 <= int(keyValuePairs['hgt'][:-2]) <= 193 or \
-     keyValuePairs['hgt'].endswith('in') and \
-     59 <= int(keyValuePairs['hgt'][:-2]) <= 76) and \
-    \
-    'hcl' in keyValuePairs and \
-    keyValuePairs['hcl'].startswith('#') and \
-    len(keyValuePairs['hcl']) == 7 and \
-    all('0' <= c <= '9' or 'a' <= c <= 'z' for c in keyValuePairs['hcl'][1:]) and \
-    \
-    'ecl' in keyValuePairs and \
-    keyValuePairs['ecl'] in ['amb', 'blu', 'brn', 'gry', 'grn', 'hzl', 'oth'] and \
-    \
-    'pid' in keyValuePairs and \
-    len(keyValuePairs['pid']) == 9 and \
-    all('0' <= c <= '9' for c in keyValuePairs['pid'])
+day = 4
+print(f"Day {day:02}")
 
-with open('../input/input04.txt') as f:
-  passports = f.read().split('\n\n')
-  requiredFields = ['byr', 'iyr', 'eyr', 'hgt', 'hcl', 'ecl', 'pid']
-  validPassports1 = sum(
-      all(field in passport for field in requiredFields) for passport in passports)
-  validPassports2 = sum(isValidPassport(passport) for passport in passports)
 
-print(f'Part 1: {validPassports1}')
-print(f'Part 2: {validPassports2}')
+def is_valid_passport(fields: str) -> bool:
+    key_value_pairs = fields.replace(" ", "\n").split()
+    key_value_pairs = [key_value_pair.split(":") for key_value_pair in key_value_pairs]
+    key_value_pairs = {key: value for (key, value) in key_value_pairs}
+
+    return (
+        "byr" in key_value_pairs
+        and key_value_pairs["byr"].isdigit()
+        and 1920 <= int(key_value_pairs["byr"]) <= 2002
+        and "iyr" in key_value_pairs
+        and key_value_pairs["iyr"].isdigit()
+        and 2010 <= int(key_value_pairs["iyr"]) <= 2020
+        and "eyr" in key_value_pairs
+        and key_value_pairs["eyr"].isdigit()
+        and 2020 <= int(key_value_pairs["eyr"]) <= 2030
+        and "hgt" in key_value_pairs
+        and (
+            key_value_pairs["hgt"].endswith("cm")
+            and 150 <= int(key_value_pairs["hgt"][:-2]) <= 193
+            or key_value_pairs["hgt"].endswith("in")
+            and 59 <= int(key_value_pairs["hgt"][:-2]) <= 76
+        )
+        and "hcl" in key_value_pairs
+        and key_value_pairs["hcl"].startswith("#")
+        and len(key_value_pairs["hcl"]) == 7
+        and all("0" <= c <= "9" or "a" <= c <= "z" for c in key_value_pairs["hcl"][1:])
+        and "ecl" in key_value_pairs
+        and key_value_pairs["ecl"] in ["amb", "blu", "brn", "gry", "grn", "hzl", "oth"]
+        and "pid" in key_value_pairs
+        and len(key_value_pairs["pid"]) == 9
+        and all("0" <= c <= "9" for c in key_value_pairs["pid"])
+    )
+
+
+with open(get_input_path(day)) as f:
+    passports = f.read().split("\n\n")
+    required_fields = ["byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid"]
+    valid_passports_1 = sum(
+        all(field in passport for field in required_fields) for passport in passports
+    )
+    valid_passports_2 = sum(is_valid_passport(passport) for passport in passports)
+
+print(f"Part 1: {valid_passports_1}")
+print(f"Part 2: {valid_passports_2}")

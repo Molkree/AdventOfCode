@@ -1,7 +1,12 @@
-# AdventOfCode2020
+# Advent of Code
 [Advent of Code](https://adventofcode.com)
 
-This repo has Visual Studio solution in the root, it includes projects for C++ and C#.
+## 2021
+
+Just Python!
+## 2020
+
+This year has Visual Studio solution in the root, it includes projects for C++ and C#.
 
 If you want to build C++ separately, something like `g++ *.cpp -std=c++20` will do. Note that you will need C++20 support (tested on GCC 10.2 and VS 2019 16.8).
 

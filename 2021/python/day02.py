@@ -7,7 +7,7 @@ with open(get_input_path(2)) as f:
     horizontal = 0
     depth = 0
     for command in lines:
-        match command.split(" "):
+        match command.split():
             case "forward", x:
                 horizontal += int(x)
             case "up", x:
@@ -21,7 +21,7 @@ with open(get_input_path(2)) as f:
     depth = 0
     aim = 0
     for command in lines:
-        match command.split(" "):
+        match command.split():
             case "forward", x:
                 horizontal += int(x)
                 depth += aim * int(x)

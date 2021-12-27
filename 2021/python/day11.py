@@ -1,4 +1,3 @@
-from copy import deepcopy
 from itertools import product
 
 from utils import get_input_path
@@ -42,19 +41,17 @@ def step() -> int:
     return flashes
 
 
-copy_grid = deepcopy(grid)
 total_flashes = 0
 first_bright_step = 0
-octopuses_count = len(grid) * len(grid[0])
 for i in range(100):
     flashes = step()
     total_flashes += flashes
-    if flashes == octopuses_count:
+    if flashes == 100:
         first_bright_step = i + 1
 assert total_flashes == 1647
 steps_count = 100
 while first_bright_step == 0:
     steps_count += 1
-    if step() == octopuses_count:
+    if step() == 100:
         first_bright_step = steps_count
 assert first_bright_step == 348

@@ -22,4 +22,5 @@ repos:
     rev: 4.0.1
     hooks:
     - id: flake8
+      args: [--min-python-version, '3.10']
       additional_dependencies: [pep8-naming]

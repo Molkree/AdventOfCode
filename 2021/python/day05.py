@@ -3,7 +3,7 @@ from utils import get_input_path
 
 class VentLine:
     def __init__(self, coords: str) -> None:
-        start, end = coords.rstrip().split(" -> ")
+        start, end = coords.split(" -> ")
         self.x1, self.y1 = map(int, start.split(","))
         self.x2, self.y2 = map(int, end.split(","))
 

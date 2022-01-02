@@ -19,7 +19,7 @@ assert int(gamma, 2) * int(epsilon, 2) == 2583164
 def get_rating(starting_bit: str, oxygen: bool = True) -> int:
     bit = starting_bit
     bit_ind = 0
-    candidates = [num.rstrip() for num in lines if num[bit_ind] == bit]
+    candidates = [num for num in lines if num[bit_ind] == bit]
     while len(candidates) > 1:
         count = 0
         bit_ind += 1

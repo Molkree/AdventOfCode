@@ -6,11 +6,9 @@ repos:
       args: ["--profile", "black"]
 
 -   repo: https://github.com/psf/black
-    rev: 21.12b0
+    rev: 22.1.0
     hooks:
     - id: black
-      args:
-        - "--target-version=py310"
 
 -   repo: https://github.com/asottile/pyupgrade
     rev: v2.31.0

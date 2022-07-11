@@ -1,8 +1,8 @@
 import operator
+from collections.abc import Callable
 from functools import partial
 from math import prod
 from typing import Literal
-from collections.abc import Callable
 
 from utils import get_input_path
 

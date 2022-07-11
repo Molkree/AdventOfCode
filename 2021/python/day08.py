@@ -26,6 +26,8 @@ def get_output_value(entry: str) -> int:
                     four = set(signal)
                 case 7:
                     eight = set(signal)
+                case _:
+                    pass
         six = set[str]()
         for signal in signals:
             if len(signal) == 6 and eight - seven < set(signal):

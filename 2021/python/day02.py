@@ -14,6 +14,8 @@ for command in lines:
             depth -= int(x)
         case "down", x:
             depth += int(x)
+        case _:
+            raise ValueError
 assert horizontal * depth == 1636725
 
 # Part 2
@@ -29,4 +31,6 @@ for command in lines:
             aim -= int(x)
         case "down", x:
             aim += int(x)
+        case _:
+            raise ValueError
 assert horizontal * depth == 1872757425

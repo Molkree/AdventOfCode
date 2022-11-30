@@ -12,7 +12,9 @@ class Bag:
         self.required_number = int(bag_string[0])
 
 
-def build_rules(rule_lines: list[str]):
+def build_rules(
+    rule_lines: list[str],
+) -> tuple[dict[str, set[str]], dict[str, set[Bag]]]:
     bottom_up: dict[str, set[str]] = {}
     top_down: dict[str, set[Bag]] = {}
     for rule in rule_lines:

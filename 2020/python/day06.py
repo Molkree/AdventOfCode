@@ -10,4 +10,6 @@ with open(get_input_path(day)) as f:
     )
 
 print(f"Part 1: {part1}")
+assert part1 == 6590
 print(f"Part 2: {part2}")
+assert part2 == 3288

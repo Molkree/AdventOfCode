@@ -7,8 +7,8 @@ dots = list[tuple[int, int]]()
 folds = list[tuple[bool, int]]()
 for line in lines:
     if "," in line:
-        x, y = line.split(",")
-        dots.append((int(x), int(y)))
+        x, y = map(int, line.split(","))
+        dots.append((x, y))
     elif any(fold in line for fold in "xy"):
         folds.append(("x" in line, int(line.split("=")[1])))
 
@@ -44,6 +44,6 @@ height = max(y for _, y in dots) + 1
 paper = [["."] * width for _ in range(height)]
 for x, y in dots:
     paper[y][x] = "#"
-for line in paper:
-    print("".join(line))
+for line in map("".join, paper):
+    print(line)
 # It's "RCPLAKHL" :)

@@ -47,8 +47,8 @@ for vent_line in vent_lines:
 
 simple_count = 0
 count = 0
-for row_ind, row in enumerate(simple_field):
-    for col_ind, point in enumerate(row):
+for row_ind, row_list in enumerate(simple_field):
+    for col_ind, point in enumerate(row_list):
         if point > 1:
             simple_count += 1
         if field[row_ind][col_ind] > 1:

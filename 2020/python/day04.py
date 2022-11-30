@@ -5,9 +5,12 @@ print(f"Day {day:02}")
 
 
 def is_valid_passport(fields: str) -> bool:
-    key_value_pairs = fields.replace(" ", "\n").split()
-    key_value_pairs = [key_value_pair.split(":") for key_value_pair in key_value_pairs]
-    key_value_pairs = {key: value for (key, value) in key_value_pairs}
+    key_value_pairs = {
+        key: value
+        for (key, value) in (
+            key_value.split(":") for key_value in fields.replace(" ", "\n").split()
+        )
+    }
 
     return (
         "byr" in key_value_pairs
@@ -47,4 +50,6 @@ with open(get_input_path(day)) as f:
     valid_passports_2 = sum(is_valid_passport(passport) for passport in passports)
 
 print(f"Part 1: {valid_passports_1}")
+assert valid_passports_1 == 208
 print(f"Part 2: {valid_passports_2}")
+assert valid_passports_2 == 167

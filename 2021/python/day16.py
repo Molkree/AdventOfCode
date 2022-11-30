@@ -17,7 +17,7 @@ version_sum = 0
 comp: Callable[[Callable[[int, int], bool], list[int]], Literal[0, 1]] = (
     lambda op, p: 1 if op(*p) else 0
 )
-ops = {
+ops: dict[int, Callable[[list[int]], int]] = {
     0: sum,
     1: prod,
     2: min,

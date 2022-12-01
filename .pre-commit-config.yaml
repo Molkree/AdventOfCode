@@ -33,6 +33,10 @@ repos:
       name: mypy 2021
       args: ["--strict"]
       files: ^2021
+    - id: mypy
+      name: mypy 2022
+      args: ["--strict"]
+      files: ^2022
 
 default_language_version:
     python: python3.11

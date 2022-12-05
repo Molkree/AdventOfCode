@@ -25,7 +25,7 @@ for _, count_str, _, from_stack_str, _, to_stack_str in map(
     stacks_2[to_stack].extend(stacks_2[from_stack][-count:])
     stacks_2[from_stack] = stacks_2[from_stack][:-count]
 
-top_crates = "".join("".join(crate[-1]) for crate in stacks)
+top_crates = "".join(crate[-1] for crate in stacks)
 assert top_crates == "JCMHLVGMG"
-top_crates_2 = "".join("".join(crate[-1]) for crate in stacks_2)
+top_crates_2 = "".join(crate[-1] for crate in stacks_2)
 assert top_crates_2 == "LVMRWSSPZ"

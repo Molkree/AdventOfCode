@@ -12,8 +12,8 @@ for line in stacks_split[:-1]:
         if letter != " ":
             stacks[i].append(letter)
 stacks = [stack[::-1] for stack in stacks]
-
 stacks_2 = [stack.copy() for stack in stacks]
+
 for _, count_str, _, from_stack_str, _, to_stack_str in map(
     str.split, commands.splitlines()
 ):

@@ -1,9 +1,15 @@
 # Advent of Code
 [Advent of Code](https://adventofcode.com)
 
+
+## 2022
+
+Just Python again!
+
 ## 2021
 
 Just Python!
+
 ## 2020
 
 This year has Visual Studio solution in the root, it includes projects for C++ and C#.

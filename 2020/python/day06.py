@@ -6,7 +6,7 @@ with open(get_input_path(day)) as f:
     groups = f.read().split("\n\n")
     part1 = sum(len(set(group.replace("\n", ""))) for group in groups)
     part2 = sum(
-        len(set[str].intersection(*map(set[str], group.split()))) for group in groups  # type: ignore[arg-type, misc] # mypy bug?
+        len(set[str].intersection(*map(set[str], group.split()))) for group in groups  # type: ignore[arg-type, misc] # https://github.com/python/mypy/issues/14259
     )
 
 print(f"Part 1: {part1}")

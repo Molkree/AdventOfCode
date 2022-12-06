@@ -20,7 +20,7 @@ for _, count_str, _, from_stack_str, _, to_stack_str in map(
     count = int(count_str)
     from_stack = int(from_stack_str) - 1
     to_stack = int(to_stack_str) - 1
-    for _ in range(count):  # type: ignore[assignment] # mypy bug?
+    for _ in range(count):  # type: ignore[assignment] # https://github.com/python/mypy/issues/9962
         stacks[to_stack].append(stacks[from_stack].pop())
     stacks_2[to_stack].extend(stacks_2[from_stack][-count:])
     stacks_2[from_stack] = stacks_2[from_stack][:-count]

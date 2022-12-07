@@ -38,17 +38,16 @@ for line in output:
 
 stack = [root]
 dir_sizes: dict[Directory, int] = {}
-visited: set[Directory] = set()
 while stack:
     cur_dir = stack[-1]
-    if cur_dir in visited:
+    if cur_dir in dir_sizes:
         stack.pop()
         dir_sizes[cur_dir] = cur_dir.size
         if cur_dir.parent:
             cur_dir.parent.size += cur_dir.size
     else:
         stack.extend(cur_dir.children.values())
-        visited.add(cur_dir)
+        dir_sizes[cur_dir] = 0
 
 sorted_sizes = sorted(dir_sizes.values())
 total_size_small_dirs = sum(sorted_sizes[: bisect(sorted_sizes, 100000)])

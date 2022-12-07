@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from bisect import bisect
 from dataclasses import dataclass, field
 
 from utils import get_input_path
@@ -12,6 +13,7 @@ class Directory:
     children: dict[str, Directory] = field(default_factory=dict)
     parent: Directory | None = None
     recursive_visited: bool = False
+    __hash__ = object.__hash__
 
 
 with open(get_input_path(7)) as f:
@@ -36,21 +38,22 @@ for line in output:
         cur_dir.size += int(line.split()[0])
 
 stack = [root]
+dir_sizes: dict[Directory, int] = {}
 while stack:
     cur_dir = stack[-1]
     if not cur_dir.children or cur_dir.recursive_visited:
         stack.pop()
+        dir_sizes[cur_dir] = cur_dir.size
         if cur_dir.parent:
             cur_dir.parent.size += cur_dir.size
     elif not cur_dir.recursive_visited:
         stack.extend(cur_dir.children.values())
         cur_dir.recursive_visited = True
 
-total_size_small_dirs = 0
-stack = [root]
-while stack:
-    cur_dir = stack.pop()
-    if cur_dir.size <= 100000:
-        total_size_small_dirs += cur_dir.size
-    stack.extend(cur_dir.children.values())
+sorted_sizes = sorted(dir_sizes.values())
+total_size_small_dirs = sum(sorted_sizes[: bisect(sorted_sizes, 100000)])
 assert total_size_small_dirs == 1743217
+
+need_to_delete = 30000000 - (70000000 - root.size)
+smallest_size_to_delete = sorted_sizes[bisect(sorted_sizes, need_to_delete)]
+assert smallest_size_to_delete == 8319096

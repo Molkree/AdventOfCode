@@ -12,7 +12,6 @@ class Directory:
     size: int = 0
     children: dict[str, Directory] = field(default_factory=dict)
     parent: Directory | None = None
-    recursive_visited: bool = False
     __hash__ = object.__hash__
 
 
@@ -39,16 +38,17 @@ for line in output:
 
 stack = [root]
 dir_sizes: dict[Directory, int] = {}
+visited: set[Directory] = set()
 while stack:
     cur_dir = stack[-1]
-    if not cur_dir.children or cur_dir.recursive_visited:
+    if cur_dir in visited:
         stack.pop()
         dir_sizes[cur_dir] = cur_dir.size
         if cur_dir.parent:
             cur_dir.parent.size += cur_dir.size
-    elif not cur_dir.recursive_visited:
+    else:
         stack.extend(cur_dir.children.values())
-        cur_dir.recursive_visited = True
+        visited.add(cur_dir)
 
 sorted_sizes = sorted(dir_sizes.values())
 total_size_small_dirs = sum(sorted_sizes[: bisect(sorted_sizes, 100000)])

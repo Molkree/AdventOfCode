@@ -21,7 +21,7 @@ with open(get_input_path(7)) as f:
 
 
 root = Directory("/")
-cur_dir: Directory = root
+cur_dir = root
 for line in output:
     if line.startswith("$ cd"):
         next_dir = line.split()[-1]

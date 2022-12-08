@@ -45,4 +45,31 @@ for col in range(1, len(grid[0]) - 1):
         visible_count, inner_visible, tallest_tree = check_tree(
             grid, row, col, visible_count, inner_visible, tallest_tree
         )
-print(visible_count)
+assert visible_count == 1690
+
+highest_scenic_score = 0
+for row in range(len(grid)):
+    for col in range(len(grid[row])):
+        tree = grid[row][col]
+        up = 0
+        for up_row in range(row - 1, -1, -1):
+            up += 1
+            if grid[up_row][col] >= tree:
+                break
+        down = 0
+        for down_row in range(row + 1, len(grid)):
+            down += 1
+            if grid[down_row][col] >= tree:
+                break
+        left = 0
+        for left_col in range(col - 1, -1, -1):
+            left += 1
+            if grid[row][left_col] >= tree:
+                break
+        right = 0
+        for right_col in range(col + 1, len(grid[row])):
+            right += 1
+            if grid[row][right_col] >= tree:
+                break
+        highest_scenic_score = max(highest_scenic_score, up * down * left * right)
+assert highest_scenic_score == 535680

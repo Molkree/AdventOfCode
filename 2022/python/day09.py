@@ -5,7 +5,7 @@ with open(get_input_path(9)) as f:
 
 
 tails_count = 9
-knots: list[tuple[int, int]] = [(0, 0) for _ in range(tails_count + 1)]
+knots: list[tuple[int, int]] = [(0, 0)] * (tails_count + 1)
 visited: list[set[tuple[int, int]]] = [{(0, 0)} for _ in range(tails_count)]
 
 

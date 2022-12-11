@@ -1,4 +1,5 @@
 from collections.abc import Callable
+from functools import reduce
 
 from utils import get_input_path
 
@@ -24,7 +25,8 @@ class Monkey:
         else:
             self.operation = lambda x: op_type(x, x)
 
-        self.test: Callable[[int], bool] = lambda x: x % int(test_str.split()[-1]) == 0
+        self.test_prime = int(test_str.split()[-1])
+        self.test: Callable[[int], bool] = lambda x: x % self.test_prime == 0
         self.true_path = int(true_str.split()[-1])
         self.false_path = int(false_str.split()[-1])
         self.inspection_count = 0
@@ -35,8 +37,11 @@ class Monkey:
             return self.true_path
         return self.false_path
 
-    def gen_new_item(self, item: int) -> int:
-        return Monkey.get_bored(self.operation(item))
+    def gen_new_item(self, item: int, worrywart: bool = False) -> int:
+        new_item = self.operation(item)
+        if not worrywart:
+            return Monkey.get_bored(new_item)
+        return new_item
 
 
 with open(get_input_path(11)) as f:
@@ -53,3 +58,16 @@ for i in range(20):
 inspection_counts = sorted(monkey.inspection_count for monkey in monkeys)
 monkey_business = inspection_counts[-2] * inspection_counts[-1]
 assert monkey_business == 54054
+
+monkeys = [Monkey(monkey_str) for monkey_str in monkey_strings]
+common_base = reduce(lambda x, y: x * y, (monkey.test_prime for monkey in monkeys))
+for i in range(10000):
+    for monkey in monkeys:
+        for item in monkey.items:
+            new_item = monkey.gen_new_item(item, worrywart=True) % common_base
+            monkeys[monkey.next_monkey(new_item)].items.append(new_item)
+        monkey.items = []
+
+inspection_counts = sorted(monkey.inspection_count for monkey in monkeys)
+monkey_business = inspection_counts[-2] * inspection_counts[-1]
+assert monkey_business == 14314925001

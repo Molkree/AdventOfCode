@@ -28,21 +28,21 @@ def parse_packet(str_packet: str) -> Packet:
 
 
 class PacketOrder(IntEnum):
-    LEFT = -1
-    RIGHT = 0
-    EQUAL = 1
+    LESS = -1
+    EQUAL = 0
+    GREATER = 1
 
 
 def get_packet_order(left: Packet, right: Packet) -> PacketOrder:
     for index, left_value in enumerate(left):
         if index >= len(right):
-            return PacketOrder.RIGHT
+            return PacketOrder.GREATER
         right_value = right[index]
         if isinstance(left_value, int) and isinstance(right_value, int):
             if left_value < right_value:
-                return PacketOrder.LEFT
+                return PacketOrder.LESS
             elif left_value > right_value:
-                return PacketOrder.RIGHT
+                return PacketOrder.GREATER
         elif isinstance(left_value, list) and isinstance(right_value, list):
             order = get_packet_order(left_value, right_value)
             if order != PacketOrder.EQUAL:
@@ -56,7 +56,7 @@ def get_packet_order(left: Packet, right: Packet) -> PacketOrder:
             if order != PacketOrder.EQUAL:
                 return order
     if len(left) < len(right):
-        return PacketOrder.LEFT
+        return PacketOrder.LESS
     return PacketOrder.EQUAL
 
 
@@ -65,7 +65,7 @@ packets: list[Packet] = []
 for index, pair in enumerate(str_pairs):
     left, right = map(parse_packet, pair)
     packets.extend([left, right])
-    if get_packet_order(left, right) != PacketOrder.RIGHT:
+    if get_packet_order(left, right) != PacketOrder.GREATER:
         good_pairs.append(index + 1)
 assert sum(good_pairs) == 5208
 

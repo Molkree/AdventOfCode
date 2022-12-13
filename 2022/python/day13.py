@@ -1,4 +1,5 @@
-from enum import Enum
+import functools
+from enum import IntEnum
 from typing import Union
 
 from utils import get_input_path
@@ -26,10 +27,10 @@ def parse_packet(str_packet: str) -> Packet:
     return packet
 
 
-class PacketOrder(Enum):
-    LEFT = 1
-    RIGHT = 2
-    EQUAL = 3
+class PacketOrder(IntEnum):
+    LEFT = -1
+    RIGHT = 0
+    EQUAL = 1
 
 
 def get_packet_order(left: Packet, right: Packet) -> PacketOrder:
@@ -60,8 +61,19 @@ def get_packet_order(left: Packet, right: Packet) -> PacketOrder:
 
 
 good_pairs: list[int] = []
+packets: list[Packet] = []
 for index, pair in enumerate(str_pairs):
     left, right = map(parse_packet, pair)
+    packets.extend([left, right])
     if get_packet_order(left, right) != PacketOrder.RIGHT:
         good_pairs.append(index + 1)
 assert sum(good_pairs) == 5208
+
+divider_packet_1, divider_packet_2 = parse_packet("[[2]]"), parse_packet("[[6]]")
+packets.extend([divider_packet_1, divider_packet_2])
+packets.sort(key=functools.cmp_to_key(get_packet_order))
+divider_index_1, divider_index_2 = (
+    packets.index(divider_packet_1) + 1,
+    packets.index(divider_packet_2) + 1,
+)
+assert divider_index_1 * divider_index_2 == 25792

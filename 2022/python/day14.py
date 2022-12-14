@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 from utils import get_input_path
 
 AIR = "."
@@ -40,38 +42,58 @@ def build_grid(paths: list[list[tuple[int, int]]]) -> tuple[list[list[str]], int
                 x1, x2 = sorted((x1, x2))
                 for x in range(x1, x2 + 1):
                     grid[y1][x - min_left] = ROCK
-    return grid, min_left
+    return grid, 500 - min_left
 
 
-def pour_sand(grid: list[list[str]], source_x: int) -> bool:
+def pour_sand(
+    grid: list[list[str]], source_x: int, endless_void: bool = True
+) -> tuple[list[list[str]], int, bool]:
     x, y = source_x, 0
     while 0 <= y < len(grid) - 1 and 0 <= x < len(grid[0]):
         if grid[y + 1][x] == AIR:
             y += 1
         elif x - 1 < 0:
-            return False
+            if endless_void:
+                return grid, source_x, False
+            grid = [[AIR] + row for row in grid]
+            grid[-1][0] = ROCK
+            x += 1
+            source_x += 1
         elif grid[y + 1][x - 1] == AIR:
             x -= 1
             y += 1
         elif x + 1 == len(grid[0]):
-            return False
+            if endless_void:
+                return grid, source_x, False
+            grid = [row + [AIR] for row in grid]
+            grid[-1][-1] = ROCK
         elif grid[y + 1][x + 1] == AIR:
             x += 1
             y += 1
         elif grid[y][x] != SAND:
             grid[y][x] = SAND
-            return True
+            return grid, source_x, True
         else:
-            return False
-    return False
+            return grid, source_x, False
+    return grid, source_x, False
 
 
-grid, min_left = build_grid(paths)
+grid, source_x = build_grid(paths)
+grid_2 = deepcopy(grid)
 grains = 0
 while True:
-    if not pour_sand(grid, 500 - min_left):
+    grid, source_x, added_sand = pour_sand(grid, source_x)
+    if not added_sand:
         break
     grains += 1
-for row in grid:
-    print("".join(row))
 assert grains == 817
+
+grid_2.append([AIR for _ in range(len(grid_2[0]))])
+grid_2.append([ROCK for _ in range(len(grid_2[0]))])
+grains = 0
+while True:
+    grid_2, source_x, added_sand = pour_sand(grid_2, source_x, endless_void=False)
+    if not added_sand:
+        break
+    grains += 1
+assert grains == 23416

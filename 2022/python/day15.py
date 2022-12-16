@@ -19,7 +19,6 @@ with open(get_input_path(15)) as f:
                 continue
             beacons.append((beacon_x, beacon_y))
             margin = radius - distance
-            for x in range(sensor_x - margin, sensor_x + margin + 1):
-                scanned_columns.add(x)
+            scanned_columns.update(range(sensor_x - margin, sensor_x + margin + 1))
 scanned_columns -= {x for x, y in beacons if y == TARGET_ROW}
 assert len(scanned_columns) == 5335787

@@ -3,6 +3,10 @@ import re
 from utils import get_input_path
 
 
+def manhattan_distance(x1: int, y1: int, x2: int, y2: int) -> int:
+    return abs(x1 - x2) + abs(y1 - y2)
+
+
 def add_interval(
     intervals: list[tuple[int, int]], start: int, end: int
 ) -> list[tuple[int, int]]:
@@ -58,7 +62,7 @@ with open(get_input_path(15)) as f:
             sensor_x, sensor_y, beacon_x, beacon_y = map(int, match.groups())
             beacons.append((beacon_x, beacon_y))
             sensors.append((sensor_x, sensor_y))
-            radiuses.append(abs(sensor_x - beacon_x) + abs(sensor_y - beacon_y))
+            radiuses.append(manhattan_distance(sensor_x, sensor_y, beacon_x, beacon_y))
 
 PART_1_TARGET = 2000000
 intervals: list[tuple[int, int]] = []
@@ -75,26 +79,39 @@ for beacon_x, beacon_y in beacons:
 bad_positions = sum(end - start + 1 for start, end in intervals)
 assert bad_positions == 5335787
 
+# The only place distress beacon can be is where the acute and obtuse outer border
+# diagonals of different sensors intersect.
+# Linear equation: y = mx + b
+# y = -x + sensor_x + sensor_y + radius + 1; acute diagonal
+# y = -x + sensor_x + sensor_y - radius - 1; acute diagonal
+# y = x - sensor_x + sensor_y + radius + 1; obtuse diagonal
+# y = x - sensor_x + sensor_y - radius - 1; obtuse diagonal
+# Let's find the intersection of the two lines.
+# Let obtuse equation be y = x + a and acute equation be y = -x + b.
+# Then intersection is (b - a) // 2, (b + a) // 2.
+acute_coefs: set[int] = set()
+obtuse_coefs: set[int] = set()
+for (x, y), radius in zip(sensors, radiuses):
+    acute_coefs.add(x + y + radius + 1)
+    acute_coefs.add(x + y - radius - 1)
+    obtuse_coefs.add(y - x + radius + 1)
+    obtuse_coefs.add(y - x - radius - 1)
 FLOOR = 0
 CEIL = 4000000
-distress_y, distress_x = 0, 0
-for y in range(FLOOR, CEIL + 1):
-    intervals = []
-    for (sensor_x, sensor_y), (beacon_x, beacon_y), radius in zip(
-        sensors, beacons, radiuses
-    ):
-        distance = abs(y - sensor_y)
-        if distance <= radius:
-            margin = radius - distance
-            left, right = sensor_x - margin, sensor_x + margin
-            if left > CEIL or right < FLOOR:
-                continue
-            intervals = add_interval(intervals, max(left, FLOOR), min(right, CEIL))
-    bad_positions = sum(end - start + 1 for start, end in intervals)
-    if bad_positions < CEIL - FLOOR + 1:
-        distress_x = intervals[0][1] + 1
-        distress_y = y
-        break
+distress_x, distress_y = 0, 0
+for obtuse_coef in obtuse_coefs:
+    for acute_coef in acute_coefs:
+        intersection = (acute_coef - obtuse_coef) // 2, (acute_coef + obtuse_coef) // 2
+        if (
+            FLOOR <= intersection[0] <= CEIL
+            and FLOOR <= intersection[1] <= CEIL
+            and all(
+                manhattan_distance(*intersection, *sensor) > radius
+                for sensor, radius in zip(sensors, radiuses)
+            )
+        ):
+            distress_x, distress_y = intersection
+            break
 
 tuning_frequency = distress_x * 4000000 + distress_y
 assert tuning_frequency == 13673971349056

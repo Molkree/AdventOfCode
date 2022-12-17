@@ -20,6 +20,14 @@ def add_interval(
                 merged_intervals[-1][0],
                 max(merged_intervals[-1][1], interval[1]),
             )
+            if len(merged_intervals) > 1 and (
+                merged_intervals[-2][1] + 1 == merged_intervals[-1][0]
+            ):
+                merged_intervals[-2] = (
+                    merged_intervals[-2][0],
+                    merged_intervals[-1][1],
+                )
+                merged_intervals.pop()
     return merged_intervals
 
 

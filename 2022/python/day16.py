@@ -67,8 +67,6 @@ def parse_input(path: Path) -> tuple[Node, dict[Node, dict[Node, int]]]:
 
 
 start_node, distances = parse_input(get_input_path(16))
-for node, node_distances in distances.items():
-    print(node.name, node_distances.values())
 working_nodes = {node for node in distances if node.rate}
 
 
@@ -112,3 +110,19 @@ max_released_pressure = max(
     run_order(distances, start_node, order, 30) for order in orders
 )
 assert max_released_pressure == 2080
+
+orders = all_orders(distances, start_node, working_nodes, [], 26)
+scores = [(run_order(distances, start_node, order, 26), set(order)) for order in orders]
+scores.sort(reverse=True)
+
+max_released_pressure = 0
+for i, (released_pressure_1, nodes_1) in enumerate(scores):
+    if released_pressure_1 * 2 < max_released_pressure:
+        break
+    for released_pressure_2, nodes_2 in scores[i + 1 :]:
+        released_pressure = released_pressure_1 + released_pressure_2
+        if released_pressure <= max_released_pressure:
+            break
+        if not nodes_1 & nodes_2:
+            max_released_pressure = released_pressure
+assert max_released_pressure == 2752

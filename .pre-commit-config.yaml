@@ -11,19 +11,19 @@ repos:
     - id: black
 
 -   repo: https://github.com/asottile/pyupgrade
-    rev: v3.9.0
+    rev: v3.10.1
     hooks:
     - id: pyupgrade
       args: ["--py311-plus"]
 
 -   repo: https://github.com/pycqa/flake8
-    rev: 6.0.0
+    rev: 6.1.0
     hooks:
     - id: flake8
       additional_dependencies: [pep8-naming]
 
 -   repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.4.1
+    rev: v1.5.1
     hooks:
     - id: mypy
       name: mypy 2020

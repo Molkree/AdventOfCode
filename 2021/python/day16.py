@@ -14,8 +14,8 @@ for hex_digit in hex:
     bin_str += bin(int(hex_digit, 16))[2:].zfill(4)
 version_sum = 0
 
-comp: Callable[[Callable[[int, int], bool], list[int]], Literal[0, 1]] = (
-    lambda op, p: 1 if op(*p) else 0
+comp: Callable[[Callable[[int, int], bool], list[int]], Literal[0, 1]] = lambda op, p: (
+    1 if op(*p) else 0
 )
 ops: dict[int, Callable[[list[int]], int]] = {
     0: sum,

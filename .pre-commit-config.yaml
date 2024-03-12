@@ -23,7 +23,7 @@ repos:
       additional_dependencies: [pep8-naming]
 
 -   repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.8.0
+    rev: v1.9.0
     hooks:
     - id: mypy
       name: mypy 2020

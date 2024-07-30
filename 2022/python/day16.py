@@ -76,7 +76,7 @@ def all_orders(
     todo: set[Node],
     done: list[Node],
     time_limit: int,
-) -> Generator[list[Node], None, None]:
+) -> Generator[list[Node]]:
     for next_node in todo:
         cost = distances[node][next_node] + 1
         if cost < time_limit:

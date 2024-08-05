@@ -17,13 +17,13 @@ repos:
       args: ["--py312-plus"]
 
 -   repo: https://github.com/pycqa/flake8
-    rev: 7.1.0
+    rev: 7.1.1
     hooks:
     - id: flake8
       additional_dependencies: [pep8-naming]
 
 -   repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.11.0
+    rev: v1.11.1
     hooks:
     - id: mypy
       name: mypy 2020

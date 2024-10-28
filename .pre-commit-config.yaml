@@ -11,7 +11,7 @@ repos:
     - id: black
 
 -   repo: https://github.com/asottile/pyupgrade
-    rev: v3.18.0
+    rev: v3.19.0
     hooks:
     - id: pyupgrade
       args: ["--py312-plus"]
@@ -23,7 +23,7 @@ repos:
       additional_dependencies: [pep8-naming]
 
 -   repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.12.1
+    rev: v1.13.0
     hooks:
     - id: mypy
       name: mypy 2020

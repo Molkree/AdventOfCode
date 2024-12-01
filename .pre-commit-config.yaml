@@ -25,7 +25,7 @@ repos:
     rev: v3.19.0
     hooks:
       - id: pyupgrade
-        args: ["--py312-plus"]
+        args: ["--py313-plus"]
 
   - repo: https://github.com/pycqa/flake8
     rev: 7.1.1
@@ -50,4 +50,4 @@ repos:
         files: ^2022
 
 default_language_version:
-  python: python3.12
+  python: python3.13

@@ -1,42 +1,42 @@
 repos:
--   repo: https://github.com/pycqa/isort
+  - repo: https://github.com/pycqa/isort
     rev: 5.13.2
     hooks:
-    - id: isort
-      args: ["--profile", "black"]
+      - id: isort
+        args: ["--profile", "black"]
 
--   repo: https://github.com/psf/black-pre-commit-mirror
+  - repo: https://github.com/psf/black-pre-commit-mirror
     rev: 24.10.0
     hooks:
-    - id: black
+      - id: black
 
--   repo: https://github.com/asottile/pyupgrade
+  - repo: https://github.com/asottile/pyupgrade
     rev: v3.19.0
     hooks:
-    - id: pyupgrade
-      args: ["--py312-plus"]
+      - id: pyupgrade
+        args: ["--py312-plus"]
 
--   repo: https://github.com/pycqa/flake8
+  - repo: https://github.com/pycqa/flake8
     rev: 7.1.1
     hooks:
-    - id: flake8
-      additional_dependencies: [pep8-naming]
+      - id: flake8
+        additional_dependencies: [pep8-naming]
 
--   repo: https://github.com/pre-commit/mirrors-mypy
+  - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.13.0
     hooks:
-    - id: mypy
-      name: mypy 2020
-      args: ["--strict"]
-      files: ^2020
-    - id: mypy
-      name: mypy 2021
-      args: ["--strict"]
-      files: ^2021
-    - id: mypy
-      name: mypy 2022
-      args: ["--strict"]
-      files: ^2022
+      - id: mypy
+        name: mypy 2020
+        args: ["--strict"]
+        files: ^2020
+      - id: mypy
+        name: mypy 2021
+        args: ["--strict"]
+        files: ^2021
+      - id: mypy
+        name: mypy 2022
+        args: ["--strict"]
+        files: ^2022
 
 default_language_version:
-    python: python3.12
+  python: python3.12

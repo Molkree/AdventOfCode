@@ -40,7 +40,8 @@ example = """3   4
 parsed_example = parse_input(example.split("\n"))
 assert solve_part_1(*parsed_example) == 11
 
-parsed_input = parse_input(open(get_input_path(1)))
+with open(get_input_path(1)) as f:
+    parsed_input = parse_input(f)
 assert solve_part_1(*parsed_input) == 3246517
 
 assert solve_part_2(*parsed_example) == 31

@@ -58,7 +58,7 @@ parsed_example = parse_input(example.split("\n"))
 assert count_safe_reports(parsed_example, strict=True) == 2
 assert count_safe_reports(parsed_example, strict=False) == 4
 
-
-parsed_input = parse_input(open(get_input_path(2)))
+with open(get_input_path(2)) as f:
+    parsed_input = parse_input(f)
 assert count_safe_reports(parsed_input, strict=True) == 524
 assert count_safe_reports(parsed_input, strict=False) == 569

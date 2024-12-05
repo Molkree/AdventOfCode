@@ -4,39 +4,28 @@ from graphlib import TopologicalSorter
 from utils import get_input_path
 
 
-def parse_input(
-    input: str,
-) -> tuple[dict[int, set[int]], dict[int, set[int]], list[list[int]]]:
-    """
-    Returns children_pages, parent_pages, updates.
-
-    `children_pages: dict[int, set[int]]` - key is a page, value is a set of children pages
-
-    `parent_pages: dict[int, set[int]]` - key is a page, value is a set of parent pages
-    """
+def parse_input(input: str) -> tuple[dict[int, set[int]], list[list[int]]]:
     rules_s, updates_s = input.split("\n\n")
     rules = [tuple(map(int, r.split("|"))) for r in rules_s.splitlines()]
-    children_pages: defaultdict[int, set[int]] = defaultdict(set)
     parent_pages: defaultdict[int, set[int]] = defaultdict(set)
     for first, second in rules:
-        children_pages[first].add(second)
         parent_pages[second].add(first)
     updates = [list(map(int, u.split(","))) for u in updates_s.splitlines()]
-    return children_pages, parent_pages, updates
+    return parent_pages, updates
 
 
-def check_update(update: list[int], children_pages: dict[int, set[int]]) -> bool:
+def check_update(update: list[int], parent_pages: dict[int, set[int]]) -> bool:
     if len(update) == 1:
         return True
-    for index, page in enumerate(update[1:], 1):
-        for prev_page in update[:index]:
-            if prev_page in children_pages[page]:
+    for index, page in enumerate(update[:-1]):
+        for next_page in update[index + 1 :]:
+            if next_page in parent_pages[page]:
                 return False
     return True
 
 
 def split_updates(
-    children_pages: dict[int, set[int]], updates: list[list[int]]
+    parent_pages: dict[int, set[int]], updates: list[list[int]]
 ) -> tuple[list[list[int]], list[list[int]]]:
     """
     Returns good updates and bad updates
@@ -44,7 +33,7 @@ def split_updates(
     good_updates: list[list[int]] = []
     bad_updates: list[list[int]] = []
     for update in updates:
-        if check_update(update, children_pages):
+        if check_update(update, parent_pages):
             good_updates.append(update)
         else:
             bad_updates.append(update)
@@ -59,17 +48,13 @@ def find_middle_sum(updates: list[list[int]]) -> int:
     return middle_sum
 
 
-def solve_part_1(children_pages: dict[int, set[int]], updates: list[list[int]]) -> int:
-    good_updates, _ = split_updates(children_pages, updates)
+def solve_part_1(parent_pages: dict[int, set[int]], updates: list[list[int]]) -> int:
+    good_updates, _ = split_updates(parent_pages, updates)
     return find_middle_sum(good_updates)
 
 
-def solve_part_2(
-    children_pages: dict[int, set[int]],
-    parent_pages: dict[int, set[int]],
-    updates: list[list[int]],
-) -> int:
-    _, bad_updates = split_updates(children_pages, updates)
+def solve_part_2(parent_pages: dict[int, set[int]], updates: list[list[int]]) -> int:
+    _, bad_updates = split_updates(parent_pages, updates)
     ordered_updates: list[list[int]] = []
     for bad_update in bad_updates:
         bad_pages = set(bad_update)
@@ -113,12 +98,12 @@ example = """47|53
 75,97,47,61,53
 61,13,29
 97,13,75,29,47"""
-children_pages, parent_pages, updates = parse_input(example)
-assert solve_part_1(children_pages, updates) == 143
-assert solve_part_2(children_pages, parent_pages, updates) == 123
+parent_pages, updates = parse_input(example)
+assert solve_part_1(parent_pages, updates) == 143
+assert solve_part_2(parent_pages, updates) == 123
 
 with open(get_input_path(5)) as f:
     input = f.read()
-children_pages, parent_pages, updates = parse_input(input)
-assert solve_part_1(children_pages, updates) == 6951
-assert solve_part_2(children_pages, parent_pages, updates) == 4121
+parent_pages, updates = parse_input(input)
+assert solve_part_1(parent_pages, updates) == 6951
+assert solve_part_2(parent_pages, updates) == 4121

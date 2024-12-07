@@ -1,4 +1,3 @@
-from copy import deepcopy
 from datetime import UTC, datetime
 
 from utils import get_input_path
@@ -6,6 +5,7 @@ from utils import get_input_path
 DIRECTIONS = {"^": (0, -1), "v": (0, 1), "<": (-1, 0), ">": (1, 0)}
 TURNS = {"^": ">", ">": "v", "v": "<", "<": "^"}
 OBSTACLE = "#"
+EMPTY_SLOT = "."
 
 
 def parse_input(input: str) -> list[list[str]]:
@@ -24,8 +24,9 @@ def check_coord_within_grid(grid: list[list[str]], x: int, y: int) -> bool:
     return 0 <= x < len(grid[0]) and 0 <= y < len(grid)
 
 
-def turn(grid: list[list[str]], x: int, y: int) -> tuple[tuple[int, int], str]:
-    guard = grid[y][x]
+def turn(
+    grid: list[list[str]], x: int, y: int, guard: str
+) -> tuple[tuple[int, int], str]:
     guard = TURNS[guard]
     direction = DIRECTIONS[guard]
     old_x, old_y = x, y
@@ -40,25 +41,25 @@ def turn(grid: list[list[str]], x: int, y: int) -> tuple[tuple[int, int], str]:
     return (x, y), guard
 
 
-def make_move(grid: list[list[str]], x: int, y: int) -> tuple[int, int]:
-    guard = grid[y][x]
+def make_move(
+    grid: list[list[str]], x: int, y: int, guard: str
+) -> tuple[int, int, str]:
     direction = DIRECTIONS[guard]
     old_x, old_y = x, y
     x, y = x + direction[0], y + direction[1]
     if not (check_coord_within_grid(grid, x, y)):
-        return x, y
+        return x, y, guard
     if grid[y][x] == OBSTACLE:
-        (x, y), guard = turn(grid, old_x, old_y)
-    if check_coord_within_grid(grid, x, y):
-        grid[y][x] = guard
-    return x, y
+        (x, y), guard = turn(grid, old_x, old_y, guard)
+    return x, y, guard
 
 
 def solve_part_1(grid: list[list[str]]) -> int:
     x, y = find_guard_coords(grid)
+    guard = grid[y][x]
     visited = {(x, y)}
     while True:
-        x, y = make_move(grid, x, y)
+        x, y, guard = make_move(grid, x, y, guard)
         if not check_coord_within_grid(grid, x, y):
             break
         visited.add((x, y))
@@ -70,10 +71,9 @@ def detect_loop(grid: list[list[str]], x: int, y: int) -> bool:
     point = (x, y), guard
     visited_points = {point}
     while True:
-        x, y = make_move(grid, x, y)
+        x, y, guard = make_move(grid, x, y, guard)
         if not check_coord_within_grid(grid, x, y):
             break
-        guard = grid[y][x]
         point = (x, y), guard
         if point in visited_points:
             return True
@@ -83,11 +83,11 @@ def detect_loop(grid: list[list[str]], x: int, y: int) -> bool:
 
 def solve_part_2(grid: list[list[str]]) -> int:
     x, y = find_guard_coords(grid)
+    guard = grid[y][x]
     guard_x, guard_y = x, y
     path = {(x, y)}
-    copy_grid = [deepcopy(row) for row in grid]
     while True:
-        x, y = make_move(copy_grid, x, y)
+        x, y, guard = make_move(grid, x, y, guard)
         if not check_coord_within_grid(grid, x, y):
             break
         path.add((x, y))
@@ -95,10 +95,10 @@ def solve_part_2(grid: list[list[str]]) -> int:
     for x, y in path:
         if (x, y) == (guard_x, guard_y):
             continue
-        copy_grid = [deepcopy(row) for row in grid]
-        copy_grid[y][x] = OBSTACLE
-        if detect_loop(copy_grid, guard_x, guard_y):
+        grid[y][x] = OBSTACLE
+        if detect_loop(grid, guard_x, guard_y):
             loops_count += 1
+        grid[y][x] = EMPTY_SLOT
     return loops_count
 
 

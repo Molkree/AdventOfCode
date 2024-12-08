@@ -43,12 +43,12 @@ def turn(
 
 def make_move(
     grid: list[list[str]], x: int, y: int, guard: str
-) -> tuple[int, int, str]:
+) -> tuple[int, int, str] | None:
     direction = DIRECTIONS[guard]
     old_x, old_y = x, y
     x, y = x + direction[0], y + direction[1]
     if not (check_coord_within_grid(grid, x, y)):
-        return x, y, guard
+        return None
     if grid[y][x] == OBSTACLE:
         (x, y), guard = turn(grid, old_x, old_y, guard)
     return x, y, guard
@@ -59,9 +59,10 @@ def solve_part_1(grid: list[list[str]]) -> int:
     guard = grid[y][x]
     visited = {(x, y)}
     while True:
-        x, y, guard = make_move(grid, x, y, guard)
-        if not check_coord_within_grid(grid, x, y):
+        move = make_move(grid, x, y, guard)
+        if not move:
             break
+        x, y, guard = move
         visited.add((x, y))
     return len(visited)
 
@@ -71,9 +72,10 @@ def detect_loop(grid: list[list[str]], x: int, y: int) -> bool:
     point = (x, y), guard
     visited_points = {point}
     while True:
-        x, y, guard = make_move(grid, x, y, guard)
-        if not check_coord_within_grid(grid, x, y):
+        move = make_move(grid, x, y, guard)
+        if not move:
             break
+        x, y, guard = move
         point = (x, y), guard
         if point in visited_points:
             return True
@@ -88,9 +90,10 @@ def solve_part_2(grid: list[list[str]]) -> int:
     prev: dict[tuple[int, int], tuple[int, int, str]] = {}
     while True:
         prev_x, prev_y, prev_guard = x, y, guard
-        x, y, guard = make_move(grid, x, y, guard)
-        if not check_coord_within_grid(grid, x, y):
+        move = make_move(grid, x, y, guard)
+        if not move:
             break
+        x, y, guard = move
         if (x, y) not in prev:
             prev[(x, y)] = prev_x, prev_y, prev_guard
     loops_count = 0

@@ -85,19 +85,23 @@ def solve_part_2(grid: list[list[str]]) -> int:
     x, y = find_guard_coords(grid)
     guard = grid[y][x]
     guard_x, guard_y = x, y
-    path = {(x, y)}
+    prev: dict[tuple[int, int], tuple[int, int, str]] = {}
     while True:
+        prev_x, prev_y, prev_guard = x, y, guard
         x, y, guard = make_move(grid, x, y, guard)
         if not check_coord_within_grid(grid, x, y):
             break
-        path.add((x, y))
+        if (x, y) not in prev:
+            prev[(x, y)] = prev_x, prev_y, prev_guard
     loops_count = 0
-    for x, y in path:
+    for (x, y), (prev_x, prev_y, prev_guard) in prev.items():
         if (x, y) == (guard_x, guard_y):
             continue
         grid[y][x] = OBSTACLE
-        if detect_loop(grid, guard_x, guard_y):
+        grid[prev_y][prev_x] = prev_guard
+        if detect_loop(grid, prev_x, prev_y):
             loops_count += 1
+        grid[prev_y][prev_x] = EMPTY_SLOT
         grid[y][x] = EMPTY_SLOT
     return loops_count
 

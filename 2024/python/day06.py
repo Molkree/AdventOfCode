@@ -1,3 +1,4 @@
+from concurrent.futures import ProcessPoolExecutor
 from datetime import UTC, datetime
 
 from utils import get_input_path
@@ -8,11 +9,15 @@ OBSTACLE = "#"
 EMPTY_SLOT = "."
 
 
-def parse_input(input: str) -> list[list[str]]:
+Grid = list[list[str]]
+Coord = tuple[int, int]
+
+
+def parse_input(input: str) -> Grid:
     return [list(line) for line in input.splitlines()]
 
 
-def find_guard_coords(grid: list[list[str]]) -> tuple[int, int]:
+def find_guard_coords(grid: Grid) -> Coord:
     for y, row in enumerate(grid):
         for x, cell in enumerate(row):
             if cell in "^v<>":
@@ -20,13 +25,11 @@ def find_guard_coords(grid: list[list[str]]) -> tuple[int, int]:
     raise ValueError("No guard found")
 
 
-def check_coord_within_grid(grid: list[list[str]], x: int, y: int) -> bool:
+def check_coord_within_grid(grid: Grid, x: int, y: int) -> bool:
     return 0 <= x < len(grid[0]) and 0 <= y < len(grid)
 
 
-def turn(
-    grid: list[list[str]], x: int, y: int, guard: str
-) -> tuple[tuple[int, int], str]:
+def turn(grid: Grid, x: int, y: int, guard: str) -> tuple[Coord, str]:
     guard = TURNS[guard]
     direction = DIRECTIONS[guard]
     old_x, old_y = x, y
@@ -41,9 +44,10 @@ def turn(
     return (x, y), guard
 
 
-def make_move(
-    grid: list[list[str]], x: int, y: int, guard: str
-) -> tuple[int, int, str] | None:
+Move = tuple[int, int, str]
+
+
+def make_move(grid: Grid, x: int, y: int, guard: str) -> Move | None:
     direction = DIRECTIONS[guard]
     old_x, old_y = x, y
     x, y = x + direction[0], y + direction[1]
@@ -54,7 +58,7 @@ def make_move(
     return x, y, guard
 
 
-def solve_part_1(grid: list[list[str]]) -> int:
+def solve_part_1(grid: Grid) -> int:
     x, y = find_guard_coords(grid)
     guard = grid[y][x]
     visited = {(x, y)}
@@ -67,7 +71,7 @@ def solve_part_1(grid: list[list[str]]) -> int:
     return len(visited)
 
 
-def detect_loop(grid: list[list[str]], x: int, y: int) -> bool:
+def detect_loop(grid: Grid, x: int, y: int) -> bool:
     guard = grid[y][x]
     point = (x, y), guard
     visited_points = {point}
@@ -83,30 +87,29 @@ def detect_loop(grid: list[list[str]], x: int, y: int) -> bool:
     return False
 
 
-def solve_part_2(grid: list[list[str]]) -> int:
+def check_loop(grid: Grid, item: tuple[Coord, Move]) -> bool:
+    (x, y), (prev_x, prev_y, prev_guard) = item
+    grid[y][x] = OBSTACLE
+    grid[prev_y][prev_x] = prev_guard
+    return detect_loop(grid, prev_x, prev_y)
+
+
+def solve_part_2(grid: Grid) -> int:
     x, y = find_guard_coords(grid)
     guard = grid[y][x]
     guard_x, guard_y = x, y
-    prev: dict[tuple[int, int], tuple[int, int, str]] = {}
+    prev: dict[Coord, Move] = {}
     while True:
         prev_x, prev_y, prev_guard = x, y, guard
         move = make_move(grid, x, y, guard)
         if not move:
             break
         x, y, guard = move
-        if (x, y) not in prev:
+        if (x, y) not in prev and (x, y) != (guard_x, guard_y):
             prev[(x, y)] = prev_x, prev_y, prev_guard
-    loops_count = 0
-    for (x, y), (prev_x, prev_y, prev_guard) in prev.items():
-        if (x, y) == (guard_x, guard_y):
-            continue
-        grid[y][x] = OBSTACLE
-        grid[prev_y][prev_x] = prev_guard
-        if detect_loop(grid, prev_x, prev_y):
-            loops_count += 1
-        grid[prev_y][prev_x] = EMPTY_SLOT
-        grid[y][x] = EMPTY_SLOT
-    return loops_count
+    with ProcessPoolExecutor() as executor:
+        results = executor.map(check_loop, [grid] * len(prev), prev.items())
+    return sum(results)
 
 
 example = """....#.....

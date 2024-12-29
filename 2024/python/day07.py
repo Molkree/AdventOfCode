@@ -1,7 +1,5 @@
-from collections.abc import Callable, Iterable, Sequence
+from collections.abc import Sequence
 from datetime import UTC, datetime
-from itertools import product
-from operator import add, mul
 
 from utils import get_input_path
 
@@ -15,43 +13,45 @@ def parse_input(str_equations: Sequence[str]) -> list[tuple[int, list[int]]]:
 
 
 def check_equation(
-    operations: Iterable[Callable[[int, int], int]], test_value: int, numbers: list[int]
+    test_value: int, numbers: list[int], check_concatenation: bool = False
 ) -> bool:
-    combinations = product(operations, repeat=len(numbers) - 1)
-
-    for combination in combinations:
-        value = numbers[0]
-        for i, operation in enumerate(combination):
-            value = operation(value, numbers[i + 1])
-            if value > test_value:
-                break
-        if value == test_value:
-            return True
+    if len(numbers) == 1:
+        return numbers[0] == test_value
+    last_number = numbers[-1]
+    if last_number > test_value:
+        return False
+    if test_value % last_number == 0 and check_equation(
+        test_value // last_number, numbers[:-1], check_concatenation
+    ):
+        return True
+    if test_value - last_number >= 0 and check_equation(
+        test_value - last_number, numbers[:-1], check_concatenation
+    ):
+        return True
+    if check_concatenation:
+        if str(test_value).endswith(str(last_number)):
+            stripped_value = str(test_value).removesuffix(str(last_number))
+            return stripped_value != "" and check_equation(
+                int(stripped_value), numbers[:-1], check_concatenation
+            )
     return False
 
 
-def solve_part(
-    input: Sequence[str], operations: Iterable[Callable[[int, int], int]]
-) -> int:
+def solve_part(input: Sequence[str], check_concatenation: bool = False) -> int:
     equations = parse_input(input)
     total_calibration_result = 0
     for test_value, numbers in equations:
-        if check_equation(operations, test_value, numbers):
+        if check_equation(test_value, numbers, check_concatenation):
             total_calibration_result += test_value
     return total_calibration_result
 
 
 def solve_part_1(input: Sequence[str]) -> int:
-    operations = [add, mul]
-    return solve_part(input, operations)
+    return solve_part(input)
 
 
 def solve_part_2(input: Sequence[str]) -> int:
-    def concatenation(a: int, b: int) -> int:
-        return int(str(a) + str(b))
-
-    operations: list[Callable[[int, int], int]] = [add, mul, concatenation]
-    return solve_part(input, operations)
+    return solve_part(input, check_concatenation=True)
 
 
 example = """190: 10 19

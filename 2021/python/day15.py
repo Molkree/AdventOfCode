@@ -22,13 +22,13 @@ def build_graph() -> list[Vertex | None]:
     for row in range(height):
         for col in range(width):
             if row > 0:
-                graph[ind].neighbors.append(ind - width)  # type:ignore
+                graph[ind].neighbors.append(ind - width)  # type: ignore
             if row < height - 1:
-                graph[ind].neighbors.append(ind + width)  # type:ignore
+                graph[ind].neighbors.append(ind + width)  # type: ignore
             if col > 0:
-                graph[ind].neighbors.append(ind - 1)  # type:ignore
+                graph[ind].neighbors.append(ind - 1)  # type: ignore
             if col < width - 1:
-                graph[ind].neighbors.append(ind + 1)  # type:ignore
+                graph[ind].neighbors.append(ind + 1)  # type: ignore
             ind += 1
     return graph
 
@@ -45,9 +45,9 @@ def dijkstra() -> int:
         distance, node_ind = hq.heappop(queue)
         if node_ind == node_count - 1:
             break
-        for neighbor_ind in graph[node_ind].neighbors:  # type:ignore
+        for neighbor_ind in graph[node_ind].neighbors:  # type: ignore
             if graph[neighbor_ind]:
-                new_distance = distance + graph[neighbor_ind].weight  # type:ignore
+                new_distance = distance + graph[neighbor_ind].weight  # type: ignore
                 if new_distance < weights[neighbor_ind]:
                     weights[neighbor_ind] = new_distance
                     hq.heappush(queue, (new_distance, neighbor_ind))

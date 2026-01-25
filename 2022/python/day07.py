@@ -1,5 +1,3 @@
-from __future__ import annotations
-
 from bisect import bisect
 from dataclasses import dataclass, field
 

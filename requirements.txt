@@ -1,5 +1,0 @@
-black
-flake8
-mypy
-pep8-naming
-prek

@@ -16,3 +16,6 @@ dev = [
     "pep8-naming==0.15.1",
     "prek==0.3.13",
 ]
+
+[tool.uv]
+exclude-newer = "1 week"

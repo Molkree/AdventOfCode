@@ -1,4 +1,11 @@
+default_language_version:
+  python: python3.14
+
+auto_update:
+  cooldown_days: 7
+
 exclude: input
+
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v6.0.0
@@ -43,7 +50,7 @@ repos:
         additional_dependencies: [pep8-naming]
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.20.2
+    rev: v2.0.0
     hooks:
       - id: mypy
         name: mypy 2020
@@ -61,9 +68,3 @@ repos:
         name: mypy 2024
         args: ["--strict"]
         files: ^2024
-
-default_language_version:
-  python: python3.14
-
-auto_update:
-  cooldown_days: 7

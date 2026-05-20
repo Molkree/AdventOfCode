@@ -47,7 +47,8 @@ repos:
     rev: 7.3.0
     hooks:
       - id: flake8
-        additional_dependencies: [pep8-naming]
+        additional_dependencies: [pep8-naming==0.15.1]
+        language: python
 
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v2.1.0

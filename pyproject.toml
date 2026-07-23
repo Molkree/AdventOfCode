@@ -7,7 +7,7 @@ readme = "README.md"
 
 
 [dependency-groups]
-build = ["uv==0.11.28"]
+build = ["uv==0.11.29"]
 dev = [
     "black==26.5.1",
     "flake8==7.3.0",

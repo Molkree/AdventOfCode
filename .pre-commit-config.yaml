@@ -1,8 +1,9 @@
 default_language_version:
   python: python3.14
 
-auto_update:
+update:
   cooldown_days: 7
+  freeze: true
 
 exclude: input
 

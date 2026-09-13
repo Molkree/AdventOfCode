@@ -7,14 +7,14 @@ readme = "README.md"
 
 
 [dependency-groups]
-build = ["uv==0.12.7"]
+build = ["uv==0.12.10"]
 dev = [
     "black==26.5.1",
     "flake8==7.3.0",
     "isort==9.0.1",
     "mypy==2.3.1",
     "pep8-naming==0.15.1",
-    "prek==0.5.0",
+    "prek==0.5.2",
 ]
 
 [tool.uv]

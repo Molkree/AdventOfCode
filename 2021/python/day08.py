@@ -5,7 +5,7 @@ with open(get_input_path(8)) as f:
 
 # Part 1
 all_outputs = [line.split(" | ")[1].split() for line in lines]
-flat_outputs = [output for outputs in all_outputs for output in outputs]
+flat_outputs = [*outputs for outputs in all_outputs]
 unique_numbers = sum(len(output) in (2, 3, 4, 7) for output in flat_outputs)
 assert unique_numbers == 397
 

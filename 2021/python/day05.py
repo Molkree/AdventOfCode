@@ -32,11 +32,8 @@ for vent_line in vent_lines:
             field[vent_line.y1][column] += 1
     else:
         x1, y1, x2, y2 = vent_line.x1, vent_line.y1, vent_line.x2, vent_line.y2
-        if (
-            vent_line.x1 > vent_line.x2
-            and vent_line.y1 > vent_line.y2
-            or vent_line.x1 > vent_line.x2
-            and vent_line.y1 < vent_line.y2
+        if (vent_line.x1 > vent_line.x2 and vent_line.y1 > vent_line.y2) or (
+            vent_line.x1 > vent_line.x2 and vent_line.y1 < vent_line.y2
         ):
             x1, y1, x2, y2 = vent_line.x2, vent_line.y2, vent_line.x1, vent_line.y1
         for column in range(x1, x2 + 1):

@@ -10,6 +10,6 @@ for i, first in enumerate(numbers):
     for j, second in enumerate(numbers[i:]):
         if first + second == 2020:
             print("Part 1:", first * second)
-        for k, third in enumerate(numbers[j:]):
+        for third in numbers[j:]:
             if first + second + third == 2020:
                 print("Part 2:", first * second * third)

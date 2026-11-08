@@ -40,7 +40,7 @@ def get_path(
                 continue
             height_diff = ord(grid[new_row][new_col]) - ord(grid[row][col])
             if height_diff < 2:
-                queue.append(((new_row, new_col), path + [(new_row, new_col)]))
+                queue.append(((new_row, new_col), [*path, (new_row, new_col)]))
                 visited.add((new_row, new_col))
     return None
 

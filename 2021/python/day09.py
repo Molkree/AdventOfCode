@@ -9,7 +9,7 @@ with open(get_input_path(9)) as f:
     lines = f.readlines()
 heightmap = [[10] + [int(height) for height in line.rstrip()] + [10] for line in lines]
 heightmap_width = len(heightmap[0])
-heightmap = [[10] * heightmap_width] + heightmap + [[10] * heightmap_width]
+heightmap = [[10] * heightmap_width, *heightmap, [10] * heightmap_width]
 heightmap_height = len(heightmap)
 risk_level = 0
 low_points = list[Coord]()

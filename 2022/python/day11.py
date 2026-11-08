@@ -48,7 +48,7 @@ with open(get_input_path(11)) as f:
     monkey_strings = f.read().split("\n\n")
 
 monkeys = [Monkey(monkey_str) for monkey_str in monkey_strings]
-for i in range(20):
+for _ in range(20):
     for monkey in monkeys:
         for item in monkey.items:
             new_item = monkey.gen_new_item(item)
@@ -61,7 +61,7 @@ assert monkey_business == 54054
 
 monkeys = [Monkey(monkey_str) for monkey_str in monkey_strings]
 common_base = reduce(lambda x, y: x * y, (monkey.test_prime for monkey in monkeys))
-for i in range(10000):
+for _ in range(10000):
     for monkey in monkeys:
         for item in monkey.items:
             new_item = monkey.gen_new_item(item, worrywart=True) % common_base

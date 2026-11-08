@@ -66,9 +66,7 @@ with open(get_input_path(15)) as f:
 
 PART_1_TARGET = 2000000
 intervals: list[tuple[int, int]] = []
-for (sensor_x, sensor_y), (beacon_x, beacon_y), radius in zip(
-    sensors, beacons, radiuses
-):
+for (sensor_x, sensor_y), radius in zip(sensors, radiuses, strict=False):
     distance = abs(PART_1_TARGET - sensor_y)
     if distance <= radius:
         margin = radius - distance
@@ -91,7 +89,7 @@ assert bad_positions == 5335787
 # Then intersection is (b - a) // 2, (b + a) // 2.
 acute_coefs: set[int] = set()
 obtuse_coefs: set[int] = set()
-for (x, y), radius in zip(sensors, radiuses):
+for (x, y), radius in zip(sensors, radiuses, strict=False):
     acute_coefs.add(x + y + radius + 1)
     acute_coefs.add(x + y - radius - 1)
     obtuse_coefs.add(y - x + radius + 1)
@@ -107,7 +105,7 @@ for obtuse_coef in obtuse_coefs:
             and FLOOR <= intersection[1] <= CEIL
             and all(
                 manhattan_distance(*intersection, *sensor) > radius
-                for sensor, radius in zip(sensors, radiuses)
+                for sensor, radius in zip(sensors, radiuses, strict=False)
             )
         ):
             distress_x, distress_y = intersection

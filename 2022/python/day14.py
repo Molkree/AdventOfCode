@@ -55,7 +55,7 @@ def pour_sand(
         elif x - 1 < 0:
             if endless_void:
                 return grid, source_x, False
-            grid = [[AIR] + row for row in grid]
+            grid = [[AIR, *row] for row in grid]
             grid[-1][0] = ROCK
             x += 1
             source_x += 1
@@ -65,7 +65,7 @@ def pour_sand(
         elif x + 1 == len(grid[0]):
             if endless_void:
                 return grid, source_x, False
-            grid = [row + [AIR] for row in grid]
+            grid = [[*row, AIR] for row in grid]
             grid[-1][-1] = ROCK
         elif grid[y + 1][x + 1] == AIR:
             x += 1

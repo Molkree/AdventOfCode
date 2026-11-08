@@ -56,31 +56,39 @@ def check_x_mas(grid: Sequence[str], row: int, col: int) -> bool:
         # M.M
         # .A.
         # S.S
-        grid[row - 1][col - 1] == "M"
-        and grid[row - 1][col + 1] == "M"
-        and grid[row + 1][col - 1] == "S"
-        and grid[row + 1][col + 1] == "S"
+        (
+            grid[row - 1][col - 1] == "M"
+            and grid[row - 1][col + 1] == "M"
+            and grid[row + 1][col - 1] == "S"
+            and grid[row + 1][col + 1] == "S"
+        )
         # S.S
         # .A.
         # M.M
-        or grid[row - 1][col - 1] == "S"
-        and grid[row - 1][col + 1] == "S"
-        and grid[row + 1][col - 1] == "M"
-        and grid[row + 1][col + 1] == "M"
+        or (
+            grid[row - 1][col - 1] == "S"
+            and grid[row - 1][col + 1] == "S"
+            and grid[row + 1][col - 1] == "M"
+            and grid[row + 1][col + 1] == "M"
+        )
         # M.S
         # .A.
         # M.S
-        or grid[row - 1][col - 1] == "M"
-        and grid[row - 1][col + 1] == "S"
-        and grid[row + 1][col - 1] == "M"
-        and grid[row + 1][col + 1] == "S"
+        or (
+            grid[row - 1][col - 1] == "M"
+            and grid[row - 1][col + 1] == "S"
+            and grid[row + 1][col - 1] == "M"
+            and grid[row + 1][col + 1] == "S"
+        )
         # S.M
         # .A.
         # S.M
-        or grid[row - 1][col - 1] == "S"
-        and grid[row - 1][col + 1] == "M"
-        and grid[row + 1][col - 1] == "S"
-        and grid[row + 1][col + 1] == "M"
+        or (
+            grid[row - 1][col - 1] == "S"
+            and grid[row - 1][col + 1] == "M"
+            and grid[row + 1][col - 1] == "S"
+            and grid[row + 1][col + 1] == "M"
+        )
     )
 
 

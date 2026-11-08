@@ -21,4 +21,24 @@ exclude-newer = "1 week"
 target-version = "py315"
 
 [tool.ruff.lint]
-ignore = ["E203", "E701"]
+ignore = ["E203", "E701", "S101"]
+select = [
+    # pycodestyle
+    "E", "W",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I",
+    # flake8-bandit
+    "S",
+    # pep8-naming
+    "N",
+    # Ruff
+    "RUF",
+]

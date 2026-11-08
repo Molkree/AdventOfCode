@@ -24,10 +24,14 @@ def is_valid_passport(fields: str) -> bool:
         and 2020 <= int(key_value_pairs["eyr"]) <= 2030
         and "hgt" in key_value_pairs
         and (
-            key_value_pairs["hgt"].endswith("cm")
-            and 150 <= int(key_value_pairs["hgt"][:-2]) <= 193
-            or key_value_pairs["hgt"].endswith("in")
-            and 59 <= int(key_value_pairs["hgt"][:-2]) <= 76
+            (
+                key_value_pairs["hgt"].endswith("cm")
+                and 150 <= int(key_value_pairs["hgt"][:-2]) <= 193
+            )
+            or (
+                key_value_pairs["hgt"].endswith("in")
+                and 59 <= int(key_value_pairs["hgt"][:-2]) <= 76
+            )
         )
         and "hcl" in key_value_pairs
         and key_value_pairs["hcl"].startswith("#")

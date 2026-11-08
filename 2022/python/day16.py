@@ -82,7 +82,7 @@ def all_orders(
                 distances,
                 next_node,
                 todo - {next_node},
-                done + [next_node],
+                [*done, next_node],
                 time_limit - cost,
             )
     yield done

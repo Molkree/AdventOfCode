@@ -7,15 +7,18 @@ readme = "README.md"
 
 
 [dependency-groups]
-build = ["uv==0.13.5"]
+build = ["uv==0.13.6"]
 dev = [
-    "black==26.10.1",
-    "flake8==7.4.1",
-    "isort==9.0.2",
-    "mypy==2.4.0",
-    "pep8-naming==0.15.1",
-    "prek==0.5.7",
+    "mypy==2.4.1",
+    "prek==0.5.9",
+    "ruff==0.17.3",
 ]
 
 [tool.uv]
 exclude-newer = "1 week"
+
+[tool.ruff]
+target-version = "py315"
+
+[tool.ruff.lint]
+ignore = ["E203", "E701"]

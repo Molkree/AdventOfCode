@@ -17,7 +17,7 @@ with open(get_input_path(day)) as f:
         for item in password:
             if item == char:
                 count += 1
-        if min <= count and count <= max:
+        if min <= count <= max:
             valid_passwords_1 += 1
         if (password[min - 1] == char or password[max - 1] == char) and password[
             min - 1

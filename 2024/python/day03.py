@@ -30,12 +30,11 @@ def find_enabled_sum(input: str) -> int:
             enabled = True
         elif "don't()" in instruction:
             enabled = False
-        elif "mul" in instruction:
-            if enabled:
-                match = search(r"mul\((\d{1,3}),(\d{1,3})\)", instruction)
-                if not match:
-                    raise ValueError(f"Could not multiplication {instruction}")
-                total += int(match.group(1)) * int(match.group(2))
+        elif "mul" in instruction and enabled:
+            match = search(r"mul\((\d{1,3}),(\d{1,3})\)", instruction)
+            if not match:
+                raise ValueError(f"Could not multiplication {instruction}")
+            total += int(match.group(1)) * int(match.group(2))
     return total
 
 

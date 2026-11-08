@@ -6,7 +6,8 @@ with open(get_input_path(17)) as f:
     coords = f.readline()
 
 x1, x2, y1, y2 = map(
-    int, re.search("target area: x=(\\d+)..(\\d+), y=(-\\d+)..(-\\d+)", coords).groups()  # type: ignore
+    int,
+    re.search("target area: x=(\\d+)..(\\d+), y=(-\\d+)..(-\\d+)", coords).groups(),  # type: ignore
 )
 
 y_velocity = -y1 - 1

@@ -32,7 +32,7 @@ with open(get_input_path(day)) as f:
 seat_ids = [get_seat_id(seat) for seat in lines]
 seat_ids.sort()
 my_seat = 0
-for i in range(0, len(seat_ids)):
+for i in range(len(seat_ids)):
     if seat_ids[i + 1] != seat_ids[i] + 1:
         my_seat = seat_ids[i] + 1
         break

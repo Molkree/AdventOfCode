@@ -65,4 +65,4 @@ while len(queue) > 0:
     part1 = new_result
 
 print(f"Part 1: {len(part1)}")
-print(f'Part 2: {dfs(top_down, "shiny gold bag")}')
+print(f"Part 2: {dfs(top_down, 'shiny gold bag')}")

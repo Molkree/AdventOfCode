@@ -14,7 +14,7 @@ replace_rules = {
 
 
 def grow_polymer(steps: int) -> int:
-    counter: dict[str, int] = Counter(map(lambda p: "".join(p), pairwise(polymer)))
+    counter: dict[str, int] = Counter("".join(p) for p in pairwise(polymer))
     for _ in range(steps):
         new_counter = defaultdict[str, int](int)
         for pair, count in counter.items():

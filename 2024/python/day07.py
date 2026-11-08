@@ -28,12 +28,11 @@ def check_equation(
         test_value - last_number, numbers[:-1], check_concatenation
     ):
         return True
-    if check_concatenation:
-        if str(test_value).endswith(str(last_number)):
-            stripped_value = str(test_value).removesuffix(str(last_number))
-            return stripped_value != "" and check_equation(
-                int(stripped_value), numbers[:-1], check_concatenation
-            )
+    if check_concatenation and str(test_value).endswith(str(last_number)):
+        stripped_value = str(test_value).removesuffix(str(last_number))
+        return stripped_value != "" and check_equation(
+            int(stripped_value), numbers[:-1], check_concatenation
+        )
     return False
 
 

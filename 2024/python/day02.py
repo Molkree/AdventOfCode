@@ -28,9 +28,7 @@ def check_report(report: list[int], strict: bool) -> bool:
                 check = check_report(
                     report[0 : ind + 1] + report[ind + 2 :], strict=True
                 )
-                if check:
-                    return True
-                return False
+                return bool(check)
     return True
 
 
